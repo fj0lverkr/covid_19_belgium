@@ -1,15 +1,7 @@
-import pandas as pd
-
 from Utils.DataPlotter import DataPlotter
-from Data.data_urls import *
-
-
-def get_mortality_data_by_date():
-    data = pd.read_json(MORTALITY)
-    return data.groupby("DATE")
-
+from Utils.DataFeeder import DataFeeder
 
 if __name__ == "__main__":
-    mort = get_mortality_data_by_date()
-    graph = DataPlotter(mort, 0, 0)
+    graph_title = "Covid-19 evolution over time in Belgium."
+    graph = DataPlotter(DataFeeder.feed(), graph_title)
     graph.plot_graph()

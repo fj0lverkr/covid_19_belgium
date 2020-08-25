@@ -3,18 +3,22 @@ import plotly.graph_objects as go
 
 
 class DataPlotter:
-    def __init__(self, mort, cases, hosp):
-        self.mort = mort
-        self.cases = cases
-        self.hosp = hosp
+    def __init__(self, data, title):
+        self.data = data
+        self.title = title
 
     def plot_graph(self):
         # Create figure and add axes
         fig = go.Figure()
-        fig.add_trace(go.Scatter(x=list(self.mort.groups), y=list(self.mort["DEATHS"].agg(np.sum))))
+        for d in self.data:
+            data_groups = d["data"].groups
+            data_key = d["key"]
+            data_values = d["data"][data_key].agg(np.sum)
+            fig.add_trace(go.Scatter(x=list(data_groups), y=list(data_values), name=data_key.replace("_", " ").title(),
+                                     yaxis="y"))
 
         # Set title
-        fig.update_layout(title_text="Covid-19 Evolution over time in Belgium")
+        fig.update_layout(title_text=self.title)
 
         # Add range slider
         fig.update_layout(xaxis=dict(rangeselector=dict(buttons=list([dict(count=1, label="1m", step="month",
