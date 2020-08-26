@@ -50,12 +50,12 @@ class DataPlotter:
                             go.Pie(
                                 labels=list(data_groups),
                                 values=list(data_values),
-                                textinfo='label+value',
+                                textinfo='value',
                                 insidetextorientation='radial'
                             )
                         )
                 col_children.append(dcc.Graph(figure=fig))
-                div_col = html.Div(children=col_children,className=f"col-{int(12/len(row))}",
+                div_col = html.Div(children=col_children, className=f"col-{int(12/len(row))}",
                                    id=f"row_{row_no}_col_{col}")
                 row_children.append(div_col)
             div_row = html.Div(children=row_children, className="row", id=f"row_{row_no}")
